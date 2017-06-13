@@ -8,6 +8,7 @@
 *.pyc
 save
 *.cpkl
+*.pkl
 *.backup
 test.py
 save_backup
