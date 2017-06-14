@@ -29,7 +29,7 @@ def main():
     parser.add_argument('--rnn_size', type=int, default=128,
                         help='size of RNN hidden state')
     # Size of each batch parameter
-    parser.add_argument('--batch_size', type=int, default=16,
+    parser.add_argument('--batch_size', type=int, default=32,
                         help='minibatch size')
     # Length of sequence to be considered parameter
     parser.add_argument('--seq_length', type=int, default=12,
@@ -45,7 +45,7 @@ def main():
     parser.add_argument('--grad_clip', type=float, default=10.,
                         help='clip gradients at this value')
     # Learning rate parameter
-    parser.add_argument('--learning_rate', type=float, default=0.005,
+    parser.add_argument('--learning_rate', type=float, default=0.001,
                         help='learning rate')
     # Decay rate for the learning rate parameter
     parser.add_argument('--decay_rate', type=float, default=0.95,
@@ -67,16 +67,16 @@ def main():
     parser.add_argument('--leaveDataset', type=int, default=3,
                         help='The dataset index to be left out in training')
     # Lambda regularization parameter (L2)
-    parser.add_argument('--lambda_param', type=float, default=0.0005,
+    parser.add_argument('--lambda_param', type=float, default=0.00005,
                         help='L2 regularization parameter')
     args = parser.parse_args()
     train(args)
 
 
 def train(args):
-    # datasets = range(4)
-    # datasets.remove(args.leaveDataset)
-    datasets = [0]
+    datasets = range(4)
+    datasets.remove(args.leaveDataset)
+    # datasets = [0]
 
     dataloader = DataLoader(args.batch_size, args.seq_length+1, datasets, forcePreProcess=True)
     stgraph = ST_GRAPH(args.batch_size, args.seq_length + 1)
@@ -102,13 +102,20 @@ def train(args):
     net = SocialLSTM(args)
     net.cuda()
 
-    optimizer = torch.optim.Adam(net.parameters(), lr=args.learning_rate, weight_decay=args.lambda_param)
+    # optimizer = torch.optim.Adam(net.parameters(), lr=args.learning_rate, weight_decay=args.lambda_param)
+    optimizer = torch.optim.RMSprop(net.parameters(), lr=args.learning_rate, weight_decay=args.lambda_param)
+    learning_rate = args.learning_rate
 
     print 'Training begin'
     best_val_loss = 100
     best_epoch = 0
 
     for epoch in range(args.num_epochs):
+        for param_group in optimizer.param_groups:
+            param_group['lr'] = learning_rate
+
+        learning_rate *= args.decay_rate
+        
         dataloader.reset_batch_pointer(valid=False)
         loss_epoch = 0
         for batch in range(dataloader.num_batches):
