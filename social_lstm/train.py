@@ -32,7 +32,7 @@ def main():
     parser.add_argument('--batch_size', type=int, default=32,
                         help='minibatch size')
     # Length of sequence to be considered parameter
-    parser.add_argument('--seq_length', type=int, default=12,
+    parser.add_argument('--seq_length', type=int, default=20,
                         help='RNN sequence length')
     # Number of epochs parameter
     parser.add_argument('--num_epochs', type=int, default=50,
@@ -48,12 +48,12 @@ def main():
     parser.add_argument('--learning_rate', type=float, default=0.001,
                         help='learning rate')
     # Decay rate for the learning rate parameter
-    parser.add_argument('--decay_rate', type=float, default=0.95,
+    parser.add_argument('--decay_rate', type=float, default=0.96,
                         help='decay rate for rmsprop')
     # Dropout not implemented.
     # Dropout probability parameter
-    parser.add_argument('--keep_prob', type=float, default=0.8,
-                        help='dropout keep probability')
+    parser.add_argument('--dropout', type=float, default=0.1,
+                        help='dropout probability')
     # Dimension of the embeddings parameter
     parser.add_argument('--embedding_size', type=int, default=64,
                         help='Embedding dimension for the spatial coordinates')
@@ -103,7 +103,7 @@ def train(args):
     net.cuda()
 
     # optimizer = torch.optim.Adam(net.parameters(), lr=args.learning_rate, weight_decay=args.lambda_param)
-    optimizer = torch.optim.RMSprop(net.parameters(), lr=args.learning_rate, weight_decay=args.lambda_param)
+    optimizer = torch.optim.RMSprop(net.parameters(), lr=args.learning_rate, momentum=0.0001, centered=True)
     learning_rate = args.learning_rate
 
     print 'Training begin'
@@ -146,7 +146,7 @@ def train(args):
                 net.zero_grad()
                 optimizer.zero_grad()
 
-                outputs, _, _ = net(nodes[:-1], grid_seq, nodesPresent[:-1], hidden_states, cell_states)
+                outputs, _, _ = net(nodes[:-1], grid_seq[:-1], nodesPresent[:-1], hidden_states, cell_states)
 
                 loss = Gaussian2DLikelihood(outputs, nodes[1:], nodesPresent[1:])
                 
@@ -203,7 +203,7 @@ def train(args):
                 hidden_states = Variable(torch.zeros(numNodes, args.rnn_size)).cuda()
                 cell_states = Variable(torch.zeros(numNodes, args.rnn_size)).cuda()
 
-                outputs, _, _ = net(nodes[:-1], grid_seq, nodesPresent[:-1], hidden_states, cell_states)
+                outputs, _, _ = net(nodes[:-1], grid_seq[:-1], nodesPresent[:-1], hidden_states, cell_states)
 
                 # Compute loss
                 loss = Gaussian2DLikelihood(outputs, nodes[1:], nodesPresent[1:])

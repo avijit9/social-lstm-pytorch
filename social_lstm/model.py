@@ -37,6 +37,7 @@ class SocialLSTM(nn.Module):
         self.output_layer = nn.Linear(self.rnn_size, self.output_size)
 
         self.relu = nn.ReLU()
+        self.dropout = nn.Dropout(args.dropout)
 
     def getSocialTensor(self, grid, hidden_states):
         numNodes = grid.size()[0]
@@ -71,8 +72,8 @@ class SocialLSTM(nn.Module):
             social_tensor = self.getSocialTensor(grid_current, hidden_states_current)
 
             # Embed inputs
-            input_embedded = self.relu(self.input_embedding_layer(nodes_current))
-            tensor_embedded = self.relu(self.tensor_embedding_layer(social_tensor))
+            input_embedded = self.dropout(self.relu(self.input_embedding_layer(nodes_current)))
+            tensor_embedded = self.dropout(self.relu(self.tensor_embedding_layer(social_tensor)))
 
             # Concat input
             concat_embedded = torch.cat((input_embedded, tensor_embedded), 1)
