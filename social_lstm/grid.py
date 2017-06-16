@@ -55,8 +55,7 @@ def getGridMask(frame, dimensions, neighborhood_size, grid_size):
             cell_x = int(np.floor(((other_x - width_low)/width_bound) * grid_size))
             cell_y = int(np.floor(((other_y - height_low)/height_bound) * grid_size))
 
-            if cell_x + cell_y*grid_size >= grid_size**2 or cell_x + cell_y*grid_size < 0:
-                print cell_x, cell_y, other_x, other_y, width_high, width_low, height_high, height_low
+            if cell_x >= grid_size or cell_x < 0 or cell_y >= grid_size or cell_y < 0:
                 continue
 
             # Other ped is in the corresponding grid cell of current ped
@@ -97,8 +96,9 @@ def getGridMaskInference(frame, dimensions, neighborhood_size, grid_size):
             cell_x = int(np.floor(((other_x - width_low)/width_bound) * grid_size))
             cell_y = int(np.floor(((other_y - height_low)/height_bound) * grid_size))
 
+            if cell_x >= grid_size or cell_x < 0 or cell_y >= grid_size or cell_y < 0:
+                continue
             
-
             # Other ped is in the corresponding grid cell of current ped
             frame_mask[pedindex, otherpedindex, cell_x + cell_y*grid_size] = 1
 
