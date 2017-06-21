@@ -131,8 +131,8 @@ def sample(nodes, nodesPresent, grid, args, net, true_nodes, true_nodesPresent, 
     for tstep in range(args.obs_length-1):
         out_obs, hidden_states, cell_states = net(nodes[tstep].view(1, numNodes, 2), [grid[tstep]], [nodesPresent[tstep]], hidden_states, cell_states)
         loss_obs = Gaussian2DLikelihood(out_obs, nodes[tstep+1].view(1, numNodes, 2), [nodesPresent[tstep+1]])
-        print loss_obs
-        raw_input()
+        # print loss_obs
+        # raw_input()
 
     ret_nodes = Variable(torch.zeros(args.obs_length+args.pred_length, numNodes, 2), volatile=True).cuda()
     ret_nodes[:args.obs_length, :, :] = nodes.clone()
@@ -142,8 +142,8 @@ def sample(nodes, nodesPresent, grid, args, net, true_nodes, true_nodesPresent, 
     for tstep in range(args.obs_length-1, args.pred_length + args.obs_length - 1):
         outputs, hidden_states, cell_states = net(ret_nodes[tstep].view(1, numNodes, 2), [prev_grid], [nodesPresent[args.obs_length-1]], hidden_states, cell_states)
         loss_pred = Gaussian2DLikelihoodInference(outputs, true_nodes[tstep+1].view(1, numNodes, 2), nodesPresent[args.obs_length-1], [true_nodesPresent[tstep+1]])
-        print loss_pred
-        raw_input()
+        # print loss_pred
+        # raw_input()
 
         mux, muy, sx, sy, corr = getCoef(outputs)
         next_x, next_y = sample_gaussian_2d(mux.data, muy.data, sx.data, sy.data, corr.data, nodesPresent[args.obs_length-1])
