@@ -26,7 +26,7 @@ def main():
     parser.add_argument('--input_size', type=int, default=2)
     parser.add_argument('--output_size', type=int, default=5)
     # RNN size parameter (dimension of the output/hidden state)
-    parser.add_argument('--rnn_size', type=int, default=128,
+    parser.add_argument('--rnn_size', type=int, default=256,
                         help='size of RNN hidden state')
     # Size of each batch parameter
     parser.add_argument('--batch_size', type=int, default=32,
