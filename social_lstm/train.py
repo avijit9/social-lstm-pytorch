@@ -48,7 +48,7 @@ def main():
     parser.add_argument('--learning_rate', type=float, default=0.001,
                         help='learning rate')
     # Decay rate for the learning rate parameter
-    parser.add_argument('--decay_rate', type=float, default=0.96,
+    parser.add_argument('--decay_rate', type=float, default=0.95,
                         help='decay rate for rmsprop')
     # Dropout not implemented.
     # Dropout probability parameter
@@ -74,7 +74,7 @@ def main():
 
 
 def train(args):
-    datasets = range(4)
+    datasets = range(5)
     datasets.remove(args.leaveDataset)
     # datasets = [0]
 
