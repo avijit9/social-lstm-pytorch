@@ -207,7 +207,7 @@ def train(args):
                 outputs, _, _ = net(nodes[:-1], grid_seq[:-1], nodesPresent[:-1], hidden_states, cell_states)
 
                 # Compute loss
-                loss = Gaussian2DLikelihood(outputs, nodes[1:], nodesPresent[1:])
+                loss = Gaussian2DLikelihood(outputs, nodes[1:], nodesPresent[1:], args.pred_length)
 
                 loss_batch += loss.data[0]
 
