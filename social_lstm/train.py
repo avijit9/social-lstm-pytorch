@@ -12,7 +12,6 @@ import argparse
 import os
 import time
 import pickle
-import ipdb
 
 from model import SocialLSTM
 from utils import DataLoader
@@ -29,13 +28,15 @@ def main():
     parser.add_argument('--rnn_size', type=int, default=256,
                         help='size of RNN hidden state')
     # Size of each batch parameter
-    parser.add_argument('--batch_size', type=int, default=32,
+    parser.add_argument('--batch_size', type=int, default=8,
                         help='minibatch size')
     # Length of sequence to be considered parameter
     parser.add_argument('--seq_length', type=int, default=20,
                         help='RNN sequence length')
+    parser.add_argument('--pred_length', type=int, default=12,
+                        help='prediction length')
     # Number of epochs parameter
-    parser.add_argument('--num_epochs', type=int, default=50,
+    parser.add_argument('--num_epochs', type=int, default=100,
                         help='number of epochs')
     # Frequency at which the model should be saved parameter
     parser.add_argument('--save_every', type=int, default=400,
@@ -45,7 +46,7 @@ def main():
     parser.add_argument('--grad_clip', type=float, default=10.,
                         help='clip gradients at this value')
     # Learning rate parameter
-    parser.add_argument('--learning_rate', type=float, default=0.001,
+    parser.add_argument('--learning_rate', type=float, default=0.003,
                         help='learning rate')
     # Decay rate for the learning rate parameter
     parser.add_argument('--decay_rate', type=float, default=0.95,
@@ -111,10 +112,10 @@ def train(args):
     best_epoch = 0
 
     for epoch in range(args.num_epochs):
-        for param_group in optimizer.param_groups:
-            param_group['lr'] = learning_rate
+        # for param_group in optimizer.param_groups:
+        #    param_group['lr'] = learning_rate
 
-        learning_rate *= args.decay_rate
+        # learning_rate *= args.decay_rate
         
         dataloader.reset_batch_pointer(valid=False)
         loss_epoch = 0
@@ -148,7 +149,7 @@ def train(args):
 
                 outputs, _, _ = net(nodes[:-1], grid_seq[:-1], nodesPresent[:-1], hidden_states, cell_states)
 
-                loss = Gaussian2DLikelihood(outputs, nodes[1:], nodesPresent[1:])
+                loss = Gaussian2DLikelihood(outputs, nodes[1:], nodesPresent[1:], args.pred_length)
                 
                 loss_batch += loss.data[0]
 
