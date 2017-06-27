@@ -57,6 +57,7 @@ class ST_GRAPH():
                         node_pos_list = {}
                         node_pos_list[framenum] = pos
                         self.nodes[sequence][pedID] = ST_NODE(node_type, node_id, node_pos_list)
+
                     else:
                         self.nodes[sequence][pedID].addPosition(pos, framenum)
 
@@ -95,6 +96,7 @@ class ST_GRAPH():
                             self.edges[sequence][edge_id] = ST_EDGE(edge_type, edge_id, edge_pos_list)
                         else:
                             self.edges[sequence][edge_id].addPosition(pos, framenum)
+
 
     def printGraph(self):
         '''
@@ -141,6 +143,7 @@ class ST_GRAPH():
                     retNodePresent[framenum].append(i)
                     retNodes[framenum, i, :] = list(pos_list[framenum])
 
+
         for ped, ped_other in edges.keys():
             i, j = list_of_nodes[ped], list_of_nodes[ped_other]
             edge = edges[(ped, ped_other)]
@@ -163,6 +166,7 @@ class ST_GRAPH():
                         retEdges[framenum, i*(numNodes) + j, :] = getMagnitudeAndDirection(edge.edge_pos_list[framenum])
                         retEdges[framenum, j*numNodes + i, 0] = np.copy(retEdges[framenum, i*(numNodes) + j, 0])
                         retEdges[framenum, j*numNodes + i, 1:3] = -np.copy(retEdges[framenum, i*(numNodes) + j, 1:3])
+
 
         return retNodes, retEdges, retNodePresent, retEdgePresent
 

@@ -35,7 +35,7 @@ def main():
     parser.add_argument('--seq_length', type=int, default=20,
                         help='RNN sequence length')
     # Number of epochs parameter
-    parser.add_argument('--num_epochs', type=int, default=50,
+    parser.add_argument('--num_epochs', type=int, default=100,
                         help='number of epochs')
     # Frequency at which the model should be saved parameter
     parser.add_argument('--save_every', type=int, default=400,
@@ -75,6 +75,7 @@ def main():
 
 def train(args):
     datasets = range(5)
+    # datasets = [0, 1, 3]
     datasets.remove(args.leaveDataset)
     # datasets = [0]
 
