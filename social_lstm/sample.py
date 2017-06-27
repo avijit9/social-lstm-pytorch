@@ -11,7 +11,6 @@ import os
 import pickle
 import argparse
 import time
-import ipdb
 
 import torch
 from torch.autograd import Variable
@@ -130,7 +129,7 @@ def sample(nodes, nodesPresent, grid, args, net, true_nodes, true_nodesPresent, 
 
     for tstep in range(args.obs_length-1):
         out_obs, hidden_states, cell_states = net(nodes[tstep].view(1, numNodes, 2), [grid[tstep]], [nodesPresent[tstep]], hidden_states, cell_states)
-        loss_obs = Gaussian2DLikelihood(out_obs, nodes[tstep+1].view(1, numNodes, 2), [nodesPresent[tstep+1]])
+        # loss_obs = Gaussian2DLikelihood(out_obs, nodes[tstep+1].view(1, numNodes, 2), [nodesPresent[tstep+1]])
         # print loss_obs
         # raw_input()
 
