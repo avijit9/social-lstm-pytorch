@@ -36,7 +36,7 @@ def main():
     parser.add_argument('--pred_length', type=int, default=12,
                         help='prediction length')
     # Number of epochs parameter
-    parser.add_argument('--num_epochs', type=int, default=100,
+    parser.add_argument('--num_epochs', type=int, default=150,
                         help='number of epochs')
     # Frequency at which the model should be saved parameter
     parser.add_argument('--save_every', type=int, default=400,
@@ -68,7 +68,7 @@ def main():
     parser.add_argument('--leaveDataset', type=int, default=3,
                         help='The dataset index to be left out in training')
     # Lambda regularization parameter (L2)
-    parser.add_argument('--lambda_param', type=float, default=0.00005,
+    parser.add_argument('--lambda_param', type=float, default=0.0001,
                         help='L2 regularization parameter')
     args = parser.parse_args()
     train(args)
@@ -106,7 +106,7 @@ def train(args):
 
     # optimizer = torch.optim.Adam(net.parameters(), lr=args.learning_rate, weight_decay=args.lambda_param)
     # optimizer = torch.optim.RMSprop(net.parameters(), lr=args.learning_rate, momentum=0.0001, centered=True)
-    optimizer = torch.optim.RMSprop(net.parameters(), lr=args.learning_rate)
+    optimizer = torch.optim.RMSprop(net.parameters(), lr=args.learning_rate, weight_decay=args.lambda_param)
     learning_rate = args.learning_rate
 
     print 'Training begin'
