@@ -53,7 +53,7 @@ def main():
                         help='decay rate for rmsprop')
     # Dropout not implemented.
     # Dropout probability parameter
-    parser.add_argument('--dropout', type=float, default=0.1,
+    parser.add_argument('--dropout', type=float, default=0,
                         help='dropout probability')
     # Dimension of the embeddings parameter
     parser.add_argument('--embedding_size', type=int, default=64,
