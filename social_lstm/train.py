@@ -25,7 +25,7 @@ def main():
     parser.add_argument('--input_size', type=int, default=2)
     parser.add_argument('--output_size', type=int, default=5)
     # RNN size parameter (dimension of the output/hidden state)
-    parser.add_argument('--rnn_size', type=int, default=256,
+    parser.add_argument('--rnn_size', type=int, default=128,
                         help='size of RNN hidden state')
     # Size of each batch parameter
     parser.add_argument('--batch_size', type=int, default=8,
@@ -104,7 +104,8 @@ def train(args):
     net.cuda()
 
     # optimizer = torch.optim.Adam(net.parameters(), lr=args.learning_rate, weight_decay=args.lambda_param)
-    optimizer = torch.optim.RMSprop(net.parameters(), lr=args.learning_rate, momentum=0.0001, centered=True)
+    # optimizer = torch.optim.RMSprop(net.parameters(), lr=args.learning_rate, momentum=0.0001, centered=True)
+    optimizer = torch.optim.RMSprop(net.parameters(), lr=args.learning_rate)
     learning_rate = args.learning_rate
 
     print 'Training begin'
