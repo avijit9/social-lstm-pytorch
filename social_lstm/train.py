@@ -106,7 +106,7 @@ def train(args):
 
     # optimizer = torch.optim.Adam(net.parameters(), lr=args.learning_rate, weight_decay=args.lambda_param)
     # optimizer = torch.optim.RMSprop(net.parameters(), lr=args.learning_rate, momentum=0.0001, centered=True)
-    optimizer = torch.optim.RMSprop(net.parameters(), lr=args.learning_rate, weight_decay=args.lambda_param)
+    optimizer = torch.optim.RMSprop(net.parameters(), lr=args.learning_rate)
     learning_rate = args.learning_rate
 
     print 'Training begin'
