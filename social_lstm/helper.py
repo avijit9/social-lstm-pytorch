@@ -10,7 +10,7 @@ import torch
 
 
 def getVector(pos_list):
-        '''
+    '''
     Gets the vector pointing from second element to first element
     params:
     pos_list : A list of size two containing two (x, y) positions

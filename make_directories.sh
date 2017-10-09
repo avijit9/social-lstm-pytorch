@@ -1,12 +1,14 @@
 #!/bin/bash
 
-mkdir save
-mkdir log
+mkdir -p save
+mkdir -p log
 
 cd save
-mkdir 0 1 2 3 4
+mkdir -p 0 1 2 3 4
 
-cd ../../log
-mkdir 0 1 2 3 4
+cd ..
 
-cd ../
+cd log
+mkdir -p 0 1 2 3 4
+
+cd ..

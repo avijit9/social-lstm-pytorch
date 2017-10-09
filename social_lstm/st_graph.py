@@ -131,8 +131,8 @@ class ST_GRAPH():
 
         retNodes = np.zeros((self.seq_length, numNodes, 2))
         retEdges = np.zeros((self.seq_length, numNodes*numNodes, 3))  # Diagonal contains temporal edges
-        retNodePresent = [[] for c in xrange(self.seq_length)]
-        retEdgePresent = [[] for c in xrange(self.seq_length)]
+        retNodePresent = [[] for c in range(self.seq_length)]
+        retEdgePresent = [[] for c in range(self.seq_length)]
 
         for i, ped in enumerate(nodes.keys()):
             list_of_nodes[ped] = i
