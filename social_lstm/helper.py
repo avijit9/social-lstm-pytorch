@@ -10,6 +10,11 @@ import torch
 
 
 def getVector(pos_list):
+        '''
+    Gets the vector pointing from second element to first element
+    params:
+    pos_list : A list of size two containing two (x, y) positions
+    '''
     pos_i = pos_list[0]
     pos_j = pos_list[1]
 
@@ -17,6 +22,11 @@ def getVector(pos_list):
 
 
 def getMagnitudeAndDirection(*args):
+    '''
+    Gets the magnitude and direction of the vector corresponding to positions
+    params:
+    args: Can be a list of two positions or the two positions themselves (variable-length argument)
+    '''
     if len(args) == 1:
         pos_list = args[0]
         pos_i = pos_list[0]
@@ -51,6 +61,11 @@ def getMagnitudeAndDirection(*args):
 
 
 def getCoef(outputs):
+    '''
+    Extracts the mean, standard deviation and correlation
+    params:
+    outputs : Output of the SRNN model
+    '''
     mux, muy, sx, sy, corr = outputs[:, :, 0], outputs[:, :, 1], outputs[:, :, 2], outputs[:, :, 3], outputs[:, :, 4]
 
     sx = torch.exp(sx)

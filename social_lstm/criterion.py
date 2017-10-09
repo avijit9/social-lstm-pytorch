@@ -65,6 +65,14 @@ def Gaussian2DLikelihood(outputs, targets, nodesPresent, pred_length):
 
 
 def Gaussian2DLikelihoodInference(outputs, targets, assumedNodesPresent, nodesPresent):
+    '''
+    Computes the likelihood of predicted locations under a bivariate Gaussian distribution at test time
+    params:
+    outputs : predicted locations
+    targets : true locations
+    assumedNodesPresent : Nodes assumed to be present in each frame in the sequence
+    nodesPresent : True nodes present in each frame in the sequence
+    '''
     # Extract mean, std devs and correlation
     mux, muy, sx, sy, corr = getCoef(outputs)
 

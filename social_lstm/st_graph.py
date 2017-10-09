@@ -97,7 +97,6 @@ class ST_GRAPH():
                         else:
                             self.edges[sequence][edge_id].addPosition(pos, framenum)
 
-
     def printGraph(self):
         '''
         Print function for the graph
@@ -107,18 +106,18 @@ class ST_GRAPH():
             nodes = self.nodes[sequence]
             edges = self.edges[sequence]
 
-            print 'Printing Nodes'
-            print '==============================='
+            print('Printing Nodes')
+            print('===============================')
             for node in nodes.values():
                 node.printNode()
-                print '--------------'
+                print('--------------')
 
             print
-            print 'Printing Edges'
-            print '==============================='
+            print('Printing Edges')
+            print('===============================')
             for edge in edges.values():
                 edge.printEdge()
-                print '--------------'
+                print('--------------')
 
     def getSequence(self, ind):
         '''
@@ -143,7 +142,6 @@ class ST_GRAPH():
                     retNodePresent[framenum].append(i)
                     retNodes[framenum, i, :] = list(pos_list[framenum])
 
-
         for ped, ped_other in edges.keys():
             i, j = list_of_nodes[ped], list_of_nodes[ped_other]
             edge = edges[(ped, ped_other)]
@@ -166,7 +164,6 @@ class ST_GRAPH():
                         retEdges[framenum, i*(numNodes) + j, :] = getMagnitudeAndDirection(edge.edge_pos_list[framenum])
                         retEdges[framenum, j*numNodes + i, 0] = np.copy(retEdges[framenum, i*(numNodes) + j, 0])
                         retEdges[framenum, j*numNodes + i, 1:3] = -np.copy(retEdges[framenum, i*(numNodes) + j, 1:3])
-
 
         return retNodes, retEdges, retNodePresent, retEdgePresent
 
@@ -224,7 +221,7 @@ class ST_NODE():
         Print function for the node
         For debugging purposes
         '''
-        print 'Node type:', self.node_type, 'with ID:', self.node_id, 'with positions:', self.node_pos_list.values(), 'at time-steps:', self.node_pos_list.keys()
+        print('Node type:', self.node_type, 'with ID:', self.node_id, 'with positions:', self.node_pos_list.values(), 'at time-steps:', self.node_pos_list.keys())
 
 
 class ST_EDGE():
@@ -277,4 +274,4 @@ class ST_EDGE():
         Print function for the edge
         For debugging purposes
         '''
-        print 'Edge type:', self.edge_type, 'between nodes:', self.edge_id, 'at time-steps:', self.edge_pos_list.keys()
+        print('Edge type:', self.edge_type, 'between nodes:', self.edge_id, 'at time-steps:', self.edge_pos_list.keys())
