@@ -175,9 +175,10 @@ def get_mean_error(ret_nodes, nodes, assumedNodesPresent, trueNodesPresent):
     '''
     pred_length = ret_nodes.size()[0]
     error = torch.zeros(pred_length).cuda()
-    counter = 0
+    
 
     for tstep in range(pred_length):
+        counter = 0
 
         for nodeID in assumedNodesPresent:
 
